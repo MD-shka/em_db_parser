@@ -9,6 +9,6 @@ async def download_file(date: str,
     try:
         async with session.get(url) as response:
             return await response.read()
-    except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+    except aiohttp.ClientError as e:
         print(f"Ошибка при скачивании отчета за {date}: {e}")
         return None
