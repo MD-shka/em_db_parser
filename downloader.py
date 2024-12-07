@@ -11,4 +11,3 @@ async def download_file(date: str,
     except aiohttp.ClientError as e:
         print(f"Ошибка при скачивании отчета за {date}: {e}")
         return None
-    
