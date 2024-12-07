@@ -8,7 +8,7 @@ Base = declarative_base()
 
 
 class SpimexTradingResult(Base):
-    __tablename__ = 'spimex_trading_result'
+    __tablename__ = "spimex_trading_result"
 
     id = Column(Integer, primary_key=True)
     exchange_product_id = Column(String, nullable=False)

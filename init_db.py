@@ -4,10 +4,12 @@ from models import Base  # type: ignore
 from config import DATABASE_URL
 
 
-
 engine = create_async_engine(DATABASE_URL)
-async_session = sessionmaker(bind=engine, class_=AsyncSession,  # type: ignore
-                             expire_on_commit=False)
+async_session = sessionmaker(
+    bind=engine,
+    class_=AsyncSession,  # type: ignore
+    expire_on_commit=False,
+)
 
 
 async def create_tables() -> None:

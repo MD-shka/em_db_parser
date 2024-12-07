@@ -14,8 +14,7 @@ async def process_reports(all_days: list[str]) -> None:
         await asyncio.gather(*tasks, return_exceptions=True)
 
 
-async def single_process_report(date: str,
-                                session: aiohttp.ClientSession) -> None:
+async def single_process_report(date: str, session: aiohttp.ClientSession) -> None:
     file_data = await download_file(date, session)
     if file_data:
         df = parse_data(file_data)  # type: ignore

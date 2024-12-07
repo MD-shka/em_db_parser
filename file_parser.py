@@ -2,12 +2,12 @@ from io import BytesIO
 import pandas as pd
 
 COLUMN_RENAME = {
-        "Код Инструмента": "exchange_product_id",
-        "Наименование Инструмента": "exchange_product_name",
-        "Базис поставки": "delivery_basis_name",
-        "Объем Договоров в единицах измерения": "volume",
-        "Обьем Договоров, руб.": "total",
-        "Количество Договоров, шт.": "count",
+    "Код Инструмента": "exchange_product_id",
+    "Наименование Инструмента": "exchange_product_name",
+    "Базис поставки": "delivery_basis_name",
+    "Объем Договоров в единицах измерения": "volume",
+    "Обьем Договоров, руб.": "total",
+    "Количество Договоров, шт.": "count",
 }
 COLUMN_CONVERT_TYPES = ["volume", "total", "count"]
 EMPTY_VALUE = 0
@@ -41,9 +41,15 @@ def format_df_for_db(df: pd.DataFrame) -> pd.DataFrame:
 
 def parse_data(file_data: bytes) -> pd.DataFrame:
     df = pd.read_excel(BytesIO(file_data))
-    date = str(df.iloc[DATE_ROW_INDEX, DATE_COLUMN_INDEX]).rsplit(" ", maxsplit=1)[LAST_INDEX]
-    index_of_header = df[df.iloc[:, TABLE_TAG_COLUMN_INDEX] == TABLE_TAG].index[FIRST_INDEX]
-    df = df.iloc[index_of_header + HEADER_OFFSET:, COLUMS_TO_SELECT].reset_index(drop=True)
+    date = str(df.iloc[DATE_ROW_INDEX, DATE_COLUMN_INDEX]).rsplit(" ", maxsplit=1)[
+        LAST_INDEX
+    ]
+    index_of_header = df[df.iloc[:, TABLE_TAG_COLUMN_INDEX] == TABLE_TAG].index[
+        FIRST_INDEX
+    ]
+    df = df.iloc[index_of_header + HEADER_OFFSET :, COLUMS_TO_SELECT].reset_index(
+        drop=True
+    )
     df.columns = pd.Index(df.iloc[FIRST_INDEX].str.replace("\n", " "))
     df = df.drop(ROWS_TO_DROP)
     df = df[df.iloc[:, LAST_INDEX] != EXCLUDE_SYMBOL].dropna().reset_index(drop=True)
